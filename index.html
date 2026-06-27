@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<title>우리 데이트 확정 💌</title>
+
+<style>
+body {
+  margin:0;
+  height:100vh;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  font-family:Arial;
+  background: linear-gradient(135deg,#ffe0ec,#e0f7ff);
+}
+
+.card {
+  background:white;
+  width:340px;
+  padding:25px;
+  border-radius:20px;
+  text-align:center;
+  box-shadow:0 10px 30px rgba(0,0,0,0.1);
+}
+
+.step { display:none; }
+.step.active { display:block; }
+
+button {
+  padding:10px 15px;
+  border:none;
+  border-radius:10px;
+  cursor:pointer;
+  margin:5px;
+}
+
+.pink { background:#ff5c8a; color:white; }
+.gray { background:#ddd; }
+
+#trickBtn {
+  position:relative;
+}
+
+input, select {
+  width:90%;
+  padding:8px;
+  border-radius:10px;
+  border:1px solid #ddd;
+  text-align:center;
+  margin:6px 0;
+}
+</style>
+</head>
+
+<body>
+
+<div class="card">
+
+  <!-- STEP 1 -->
+  <div class="step active" id="s1">
+    <h2>💌 우리 데이트</h2>
+    <p>오늘도 같이 가는 거 맞지?</p>
+    <button class="pink" onclick="next(2)">당연하지</button>
+  </div>
+
+  <!-- STEP 2 -->
+  <div class="step" id="s2">
+    <h3>오늘 컨디션은?</h3>
+    <select id="mood">
+      <option>완전 좋음 😎</option>
+      <option>그냥 보통 😐</option>
+      <option>귀찮지만 너라서 감 😏</option>
+    </select>
+    <button class="pink" onclick="next(3)">확인</button>
+  </div>
+
+  <!-- STEP 3 -->
+  <div class="step" id="s3">
+    <h3>오늘 너 선택권 줌</h3>
+    <p>어디 갈까?</p>
+
+    <select id="place">
+      <option value="movie">영화관 🎬</option>
+      <option value="cafe">카페 ☕</option>
+      <option value="walk">걷기 🚶</option>
+    </select>
+
+    <button class="pink" onclick="next(4)">좋아</button>
+  </div>
+
+  <!-- STEP 4 (장난 구간) -->
+  <div class="step" id="s4">
+    <h3>진짜 중요한 질문</h3>
+    <p>오늘 나랑 데이트 즐길 준비 됐어?</p>
+
+    <button class="pink" onclick="final()">YES 😏</button>
+    <button class="gray" id="trickBtn" onmouseover="moveBtn()">NO 🙄</button>
+  </div>
+
+  <!-- STEP 5 -->
+  <div class="step" id="s5">
+    <h2>💖 확정</h2>
+    <p id="result"></p>
+  </div>
+
+</div>
+
+<script>
+
+function next(n){
+  document.querySelectorAll('.step').forEach(s=>s.classList.remove('active'));
+  document.getElementById('s'+n).classList.add('active');
+}
+
+function moveBtn(){
+  let btn = document.getElementById("trickBtn");
+  btn.style.position = "absolute";
+  btn.style.left = Math.random()*200 + "px";
+  btn.style.top = Math.random()*80 + "px";
+}
+
+function final(){
+  let mood = document.getElementById("mood").value;
+  let place = document.getElementById("place").value;
+
+  let placeText =
+    place === "movie" ? "영화관 🎬" :
+    place === "cafe" ? "카페 ☕" : "같이 걷기 🚶";
+
+  document.getElementById("result").innerText =
+    "좋아, 오늘 데이트 확정 😏\n\n" +
+    "컨디션: " + mood + "\n" +
+    "장소: " + placeText + "\n\n" +
+    "이건 거절권 없는 거 알지?";
+  
+  next(5);
+}
+
+</script>
+
+</body>
+</html>
