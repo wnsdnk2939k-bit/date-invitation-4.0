@@ -2,7 +2,7 @@
 <html lang="ko">
 <head>
 <meta charset="UTF-8">
-<title>우리 데이트 확정 💌</title>
+<title>우리 데이트 확인 💌</title>
 
 <style>
 body {
@@ -31,24 +31,24 @@ button {
   padding:10px 15px;
   border:none;
   border-radius:10px;
-  cursor:pointer;
   margin:5px;
+  cursor:pointer;
 }
 
 .pink { background:#ff5c8a; color:white; }
 .gray { background:#ddd; }
 
-#trickBtn {
+#trick {
   position:relative;
 }
 
-input, select {
+select {
   width:90%;
   padding:8px;
   border-radius:10px;
   border:1px solid #ddd;
+  margin:8px 0;
   text-align:center;
-  margin:6px 0;
 }
 </style>
 </head>
@@ -59,48 +59,45 @@ input, select {
 
   <!-- STEP 1 -->
   <div class="step active" id="s1">
-    <h2>💌 우리 데이트</h2>
-    <p>오늘도 같이 가는 거 맞지?</p>
+    <h2>💌 오늘 데이트 확인</h2>
+    <p>우리 오늘 만나는 거 맞지?</p>
     <button class="pink" onclick="next(2)">당연하지</button>
   </div>
 
   <!-- STEP 2 -->
   <div class="step" id="s2">
-    <h3>오늘 컨디션은?</h3>
+    <h3>오늘 분위기 선택</h3>
     <select id="mood">
-      <option>완전 좋음 😎</option>
-      <option>그냥 보통 😐</option>
-      <option>귀찮지만 너라서 감 😏</option>
+      <option>달달 모드 💕</option>
+      <option>장난 모드 😏</option>
+      <option>귀찮은데 너라서 감 😌</option>
     </select>
-    <button class="pink" onclick="next(3)">확인</button>
+    <button class="pink" onclick="next(3)">다음</button>
   </div>
 
   <!-- STEP 3 -->
   <div class="step" id="s3">
-    <h3>오늘 너 선택권 줌</h3>
-    <p>어디 갈까?</p>
-
-    <select id="place">
-      <option value="movie">영화관 🎬</option>
-      <option value="cafe">카페 ☕</option>
-      <option value="walk">걷기 🚶</option>
+    <h3>오늘 플랜 고르기</h3>
+    <select id="plan">
+      <option value="movie">만화카페 🎬</option>
+      <option value="cafe">내 방 ☕</option>
+      <option value="walk">산책 🚶</option>
     </select>
-
-    <button class="pink" onclick="next(4)">좋아</button>
+    <button class="pink" onclick="next(4)">확정</button>
   </div>
 
   <!-- STEP 4 (장난 구간) -->
   <div class="step" id="s4">
-    <h3>진짜 중요한 질문</h3>
-    <p>오늘 나랑 데이트 즐길 준비 됐어?</p>
+    <h3>마지막 확인</h3>
+    <p>나랑 오늘 같이 있는 거 좋지?</p>
 
-    <button class="pink" onclick="final()">YES 😏</button>
-    <button class="gray" id="trickBtn" onmouseover="moveBtn()">NO 🙄</button>
+    <button class="pink" onclick="final()">응 😏</button>
+    <button class="gray" id="trick" onmouseover="run()">잠깐 고민</button>
   </div>
 
   <!-- STEP 5 -->
   <div class="step" id="s5">
-    <h2>💖 확정</h2>
+    <h2>💖 오늘 확정</h2>
     <p id="result"></p>
   </div>
 
@@ -113,26 +110,35 @@ function next(n){
   document.getElementById('s'+n).classList.add('active');
 }
 
-function moveBtn(){
-  let btn = document.getElementById("trickBtn");
-  btn.style.position = "absolute";
-  btn.style.left = Math.random()*200 + "px";
-  btn.style.top = Math.random()*80 + "px";
+function run(){
+  let b = document.getElementById("trick");
+  b.style.position="absolute";
+  b.style.left=Math.random()*200+"px";
+  b.style.top=Math.random()*80+"px";
 }
 
 function final(){
   let mood = document.getElementById("mood").value;
-  let place = document.getElementById("place").value;
+  let plan = document.getElementById("plan").value;
 
-  let placeText =
-    place === "movie" ? "영화관 🎬" :
-    place === "cafe" ? "카페 ☕" : "같이 걷기 🚶";
+  let planText =
+    plan==="movie"?"영화관 🎬":
+    plan==="cafe"?"카페 ☕":"산책 🚶";
+
+  let msg = "";
+
+  if(mood.includes("달달")){
+    msg = "오늘은 그냥… 우리 둘만 잘 놀자 💕";
+  } else if(mood.includes("장난")){
+    msg = "오늘 너 놀리면서 하루 다 쓸 예정 😏";
+  } else {
+    msg = "귀찮아도 결국 너 만나면 괜찮아지더라.";
+  }
 
   document.getElementById("result").innerText =
-    "좋아, 오늘 데이트 확정 😏\n\n" +
-    "컨디션: " + mood + "\n" +
-    "장소: " + placeText + "\n\n" +
-    "이건 거절권 없는 거 알지?";
+    "📍 오늘 계획: " + planText + "\n\n" +
+    msg + "\n\n" +
+    "결론: 오늘 데이트는 이미 확정이야.";
   
   next(5);
 }
